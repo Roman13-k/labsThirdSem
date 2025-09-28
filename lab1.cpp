@@ -16,10 +16,6 @@ public:
     virtual void displayInfo() const {
         cout << "Name: " << name << " Age: " << age << endl;
     }
-
-    virtual ~Animal() {
-        cout << "Animal delete" << endl;
-    };
 };
 
 class Dog : public Animal {
@@ -85,10 +81,10 @@ int main() {
 	new Cat(2,"Whiskers","black"),
 	new Bird(3,"Tweety",false)
 	};
-\
+
 	for (Animal* animal : animals) {
 		animal->displayInfo();
-		animal->makeSound();
+		animal->Animal::makeSound();
 		std::cout << "----------------------" << std::endl;
 	}
 

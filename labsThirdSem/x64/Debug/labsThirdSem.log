@@ -1,2 +1,2 @@
-﻿  lab1.cpp
-D:\UNI\сем_3\labsThirdSem\lab1.cpp(86,10): error C2243: приведение типов: преобразование "Bird *" в "Animal *" существует, но недоступно
+﻿  lab2.cpp
+  labsThirdSem.vcxproj -> D:\UNI\сем_3\labsThirdSem\x64\Debug\labsThirdSem.exe
