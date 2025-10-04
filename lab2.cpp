@@ -10,7 +10,7 @@ struct Animal {
 	vector<string> breed; 
 };
 
-void addNewAnimal(vector<Animal>& animals) {
+void addNewAnimal(vector<Animal>& animals, map<int, Animal>& animalsMap) {
     Animal a;
 
     cout << "Enter animal ID: ";
@@ -31,6 +31,8 @@ void addNewAnimal(vector<Animal>& animals) {
     }
 
     animals.push_back(a);
+    animalsMap[a.id] = a;
+    
 }
 
 void displayAllAnimals(const vector<Animal>& animals) {
@@ -53,7 +55,7 @@ void displayBreedsOfAnimal(const Animal& animal) {
     cout << endl;
 }
 
-void findAnimalByBreed(const vector<Animal>& animals, const string& breedName) {
+Animal findAnimalByBreed(const vector<Animal>& animals, const string& breedName) {
     bool found = false;
 
     for (const Animal& animal : animals) {
@@ -61,7 +63,7 @@ void findAnimalByBreed(const vector<Animal>& animals, const string& breedName) {
             if (breed == breedName) {
                 cout << "Found animal: ID=" << animal.id << ", Type=" << animal.type << endl;
                 found = true;
-                break;
+                return animal;
             }
         }
     }
@@ -71,56 +73,102 @@ void findAnimalByBreed(const vector<Animal>& animals, const string& breedName) {
     }
 }
 
-void findAnimalById(const map<int, Animal>& animalMap, int id) {
+Animal findAnimalById(const map<int, Animal>& animalMap, int id) {
     auto it = animalMap.find(id);
     if (it != animalMap.end()) {
         cout << "Animal found: ID=" << it->second.id << ", Type=" << it->second.type << endl;
-        displayBreedsOfAnimal(it->second);
+        return it->second;
     }
     else {
         cout << "No animal found with ID: " << id << endl;
     }
 }
 
-void addBreedToAnimal(map<int, Animal>& animalMap, int id, const string& newBreed) {
+void addBreedToAnimal(vector<Animal>& animals,map<int, Animal>& animalMap, int id, const string& newBreed) {
     auto it = animalMap.find(id);
     if (it != animalMap.end()) {
         it->second.breed.push_back(newBreed);
-        cout << "Breed '" << newBreed << "' added to animal ID " << id << endl;
+        for (Animal animal : animals) {
+            
+            if (animal.id == id) {
+                animal.breed.push_back(newBreed);
+                cout << "Breed" << newBreed << "added to animal ID " << id << endl;
+            }
+            else cout << "Not found";
+            
+        }
+        
     }
     else {
         cout << "No animal with ID " << id << " found!" << endl;
     }
 }
 
-int main() {
-    vector<Animal> animals = {
-      {1, "Dog", {"Labrador", "Retriever"}},
-      {2, "Cat", {"Siamese"}},
-      {3, "Bird", {"Parrot"}}
-    };
-    addNewAnimal(animals);
-    addNewAnimal(animals);
-    displayAllAnimals(animals);
+void menu(vector<Animal>& animals, map<int, Animal>& animalsMap) {
+    while (true) {
+        int a = 7;
+        cout << "---------------------------------" << endl;
+        cout << "Pres 1 for add animal" << endl;
+        cout << "Pres 2 for dispay all animals" << endl;
+        cout << "Pres 3 for diplay all breeds of animal" << endl;
+        cout << "Pres 4 for search animal by breed" << endl;
+        cout << "Pres 5 for search animal by id" << endl;
+        cout << "Pres 6 for add breed to animal" << endl;
+        cout << "Pres 7 for quit" << endl;
+        cin >> a;
 
-    Animal& animalToDisplayBreeds= animals.front();
-    cout << "Display all breeds for aimal type: " << animalToDisplayBreeds.type<<endl;
-    displayBreedsOfAnimal(animalToDisplayBreeds);
-
-    string breedToFind = "Labrador";
-    cout << "Searching for animal of breed: " << breedToFind << endl;
-    findAnimalByBreed(animals, breedToFind);
-
-    map<int, Animal> animalMap;
-    for (const auto& a : animals) {
-        animalMap[a.id] = a;
+        switch (a) {
+        case 1: {
+            addNewAnimal(animals, animalsMap);
+            break;
+        }
+        case 2: {
+            displayAllAnimals(animals);
+            break;
+        }
+        case 3: {
+            cout << "Enter ID" << endl;
+            int id;
+            cin >> id;
+            displayBreedsOfAnimal(findAnimalById(animalsMap, id));
+            break;
+        }
+        case 4: {
+            cout << "Enter breed" << endl;
+            string breed;
+            cin >> breed;
+            findAnimalByBreed(animals, breed);
+            break;
+        }
+        case 5: {
+            cout << "Enter ID" << endl;
+            int id;
+            cin >> id;
+            findAnimalById(animalsMap, id);
+            break;
+        }
+        case 6: {
+            cout << "Enter breed and id" << endl;
+            string breed;
+            int id;
+            cin >> breed>>id;
+            addBreedToAnimal(animals,animalsMap, id, breed);
+            break;
+        }
+        case 7: {
+            return;
+        }
+        default: {
+            cout << "pres 1-7" << endl;
+            break;
+        }
+        }
     }
-    cout << "Searching by ID=2:"<<endl;
-    findAnimalById(animalMap, 2);
+}
 
-    cout << "Adding new breed to ID=1:"<<endl;
-    addBreedToAnimal(animalMap, 1, "Bulldog");
-    findAnimalById(animalMap, 1);
-
+int main() {
+    vector<Animal> animals;
+    map<int, Animal> animalMap;
+    menu(animals, animalMap);
 	return 0;
 }
