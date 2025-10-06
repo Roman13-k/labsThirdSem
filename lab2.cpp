@@ -36,9 +36,10 @@ void addNewAnimal(vector<Animal>& animals, map<int, Animal>& animalsMap) {
 }
 
 void displayAllAnimals(const vector<Animal>& animals) {
-    for (const Animal& a : animals) {
+    for (const Animal& a : animals) { 
         cout << "ID: " << a.id << ", Type: " << a.type << ", Breeds: ";
-        for (const auto& b : a.breed) cout << b << " ";
+        for (const auto& b : a.breed)  
+            cout << b << " ";
         cout << endl;
     }
 }
@@ -48,7 +49,7 @@ void displayBreedsOfAnimal(const Animal& animal) {
         cout << "No breeds";
     }
     else {
-        for (const string& b : animal.breed) {
+        for (const auto& b : animal.breed) {
             cout << b << " ";
         }
     }
@@ -88,11 +89,11 @@ void addBreedToAnimal(vector<Animal>& animals,map<int, Animal>& animalMap, int i
     auto it = animalMap.find(id);
     if (it != animalMap.end()) {
         it->second.breed.push_back(newBreed);
-        for (Animal animal : animals) {
+        for (Animal &animal : animals) {
             
             if (animal.id == id) {
                 animal.breed.push_back(newBreed);
-                cout << "Breed" << newBreed << "added to animal ID " << id << endl;
+                cout << "Breed " << newBreed << " added to animal ID " << id << endl;
             }
             else cout << "Not found";
             

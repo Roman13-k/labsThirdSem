@@ -1,4 +1,2 @@
-﻿  lab2.cpp
-D:\UNI\сем_3\labsThirdSem\lab2.cpp(74,1): warning C4715: findAnimalByBreed: значение возвращается не при всех путях выполнения
-D:\UNI\сем_3\labsThirdSem\lab2.cpp(85,1): warning C4715: findAnimalById: значение возвращается не при всех путях выполнения
+﻿  lab3.cpp
   labsThirdSem.vcxproj -> D:\UNI\сем_3\labsThirdSem\x64\Debug\labsThirdSem.exe
