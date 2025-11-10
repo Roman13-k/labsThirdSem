@@ -18,7 +18,7 @@ private:
     double width;
     double height;
 public:
-    Rectangle(double w, double h) : width(w), height(h) {}
+    Rectangle(double w, double h) : width(w), height(h)  {}
 
     double area() const override {
         return width * height;
